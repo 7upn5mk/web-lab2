@@ -282,7 +282,7 @@
                                 <ul id="errors"></ul>
                                 <div class="buttons">
                                     <input id="submit" type="submit" value="Submit">
-                                    <input id="reset" type="reset" value="Reset">
+                                    <input id="reset" type="button" value="Reset">
                                 </div>
                             </td>
                         </tr>
