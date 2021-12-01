@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>Controller</servlet-name>
-        <servlet-class>ControllerServlet</servlet-class>
+        <servlet-class>main.ControllerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
@@ -15,12 +15,22 @@
 
     <servlet>
         <servlet-name>AreaChecker</servlet-name>
-        <servlet-class>AreaCheckServlet</servlet-class>
+        <servlet-class>main.AreaCheckServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AreaChecker</servlet-name>
         <url-pattern>/areacheck</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Clear</servlet-name>
+        <servlet-class>main.ClearServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Clear</servlet-name>
+        <url-pattern>/clear</url-pattern>
+    </servlet-mapping>
+
 
     <error-page>
         <error-code>404</error-code>

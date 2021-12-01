@@ -1,10 +1,12 @@
+package main;
+
 import java.util.Date;
 
 public class Result {
     private double x,y,r;
     Date start_time;
     long executed_time; //millisecond
-    private boolean result;
+    private boolean hit;
 
     public Result(double x,double y, double r) {
         this.x = x;
@@ -12,7 +14,7 @@ public class Result {
         this.r = r;
         this.start_time = new Date();
         long startTime = System.nanoTime();
-        this.result = verify();
+        this.hit = verify();
         long endTime = System.nanoTime();
         this.executed_time = (endTime - startTime);
     }
@@ -23,7 +25,7 @@ public class Result {
 
     @Override
     public String toString() {
-        return "{\"x\":"+x+",\"y\":"+y+",\"r\":"+r+",\"result\":"+(result?"\"true\"":"\"false\"")+",\"time\":\""+start_time.toString()+"\",\"executed_time\":"+executed_time+"}";
+        return "{\"x\":"+x+",\"y\":"+y+",\"r\":"+r+",\"result\":"+(hit?"\"true\"":"\"false\"")+",\"time\":\""+start_time.toString()+"\",\"executed_time\":"+executed_time+"}";
     }
 
     public double getX() {
@@ -46,8 +48,8 @@ public class Result {
         return executed_time;
     }
 
-    public boolean isResult() {
-        return result;
+    public boolean isHit() {
+        return hit;
     }
 
     public void setX(double x) {
@@ -70,7 +72,7 @@ public class Result {
         this.executed_time = executed_time;
     }
 
-    public void setResult(boolean result) {
-        this.result = result;
+    public void setHit(boolean result) {
+        this.hit = result;
     }
 }

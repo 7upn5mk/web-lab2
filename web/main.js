@@ -2,6 +2,11 @@ $(document).ready(function() {
     const errors = $("#errors")[0]
     const result_table = $("#result-table")[0]
     const area = $("svg")[0]
+    //initial load
+    init();
+    function init() {
+        $("#tableofresults").load("table.jsp")
+    }
 
     //Add CSS to the clicked button X, and remove the others
     $("#x-values :button").click(function () {
@@ -16,8 +21,7 @@ $(document).ready(function() {
         if (!coord) {
             return false;
         }
-        connect(coord,true)
-
+        connect(coord,1)
     })
 
     $("#reset")[0].addEventListener("click",function (event){
@@ -26,11 +30,9 @@ $(document).ready(function() {
         $("#y-values")[0].value = ""
         $("input[type=radio]").prop('checked', false);
         // $("input[name=\"rvalue\"][value=\"1\"]").attr('checked', true);
-        while(result_table.rows.length > 1){
-            result_table.deleteRow(-1);
-        }
         $("svg circle").remove()
         while (errors.firstChild) {errors.removeChild(errors.firstChild)}
+        connect({x:0,y:0,r:0},2)
     })
 
     function dataValidate(includeXY) {
@@ -49,30 +51,44 @@ $(document).ready(function() {
         } else {if (errorCount>0) {return false} else {return r_element.value}}
     }
 
-    function connect(coord, isLimit) {
-        let request = "?x=" + encodeURIComponent(coord.x) + "&y=" + encodeURIComponent(coord.y) + "&r=" + encodeURIComponent(coord.r) +
-            "&islimit=" + (isLimit?1:0);
-        console.log(request)
-        fetch("app"+request).then(response => {
-            if (!response.ok) {
-                throw new Error(response.status+": "+response.statusText)
-            } else {
-                return response.json()
+    function connect(coord, mode) {
+        try {
+            if (mode===2) {
+                fetch("app?mode=2").then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.status+": "+response.statusText)
+                    }
+                }).then(function() {
+                    $("#tableofresults").load("table.jsp")
+                })
             }
-        }).then(function (result) {
-            if (result.hasOwnProperty("error")) {throw new Error(result["error"])}
             else {
-                let row = result_table.insertRow(-1)
-                let properties = Object.keys(result)
-                for (let property of properties) {
-                    let cell = row.insertCell(-1)
-                    let text = document.createTextNode(result[property])
-                    cell.appendChild(text)
-                }
+                let request = "?x=" + encodeURIComponent(coord.x) + "&y=" + encodeURIComponent(coord.y) + "&r=" + encodeURIComponent(coord.r) +
+                    "&mode=" + mode;
+                fetch("app" + request).then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.status + ": " + response.statusText)
+                    } else {
+                        return response.json()
+                    }
+                }).then(function (result) {
+                    if (result.hasOwnProperty("error")) {
+                        throw new Error(result["error"])
+                    } else {
+                        window.location.replace("result.jsp") // put '/' in front of address to direct to root address
+                        // let row = result_table.insertRow(-1)
+                        // let properties = Object.keys(result)
+                        // for (let property of properties) {
+                        //     let cell = row.insertCell(-1)
+                        //     let text = document.createTextNode(result[property])
+                        //     cell.appendChild(text)
+                        // }
+                    }
+                })
             }
-        }).catch(error => {
+        } catch (e) {
             printError(error)
-        })
+        }
     }
 
     function printError(s) {
@@ -93,7 +109,7 @@ $(document).ready(function() {
         setPointer(x,y)
         x = ((x-150)*r/120).toFixed(2)
         y = ((150-y)*r/120).toFixed(2)
-        connect({x:x,y:y,r:r},false)
+        connect({x:x,y:y,r:r},0)
     })
 
 

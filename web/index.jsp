@@ -7,7 +7,7 @@
     <title>Lab 1 web programming</title>
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="scripts/DataHandler.js"></script>
+    <script src="main.js"></script>
     <style>
         body{
             color: black;
@@ -36,6 +36,7 @@
         }
         .right-aligned{
             float: right;
+            text-align: right;
             margin-right: 5%;
         }
         .header{
@@ -51,10 +52,11 @@
         }
         .input-label{
             float: left;
-            width: 25%;
+            width: 15%;
         }
         .input-value{
             text-align: center;
+            width: 70%;
         }
         #input-table{
             margin: auto;
@@ -62,13 +64,11 @@
             alignment: center;
         }
         #y-values{
-            width: 70%;
             font-family: "Georgia", serif;
             font-size: 19px;
         }
         #x-values {
             margin:auto;
-            width: 70%;
         }
         #x-values input{
             width: 27px;
@@ -81,7 +81,6 @@
         }
         #r-values{
             margin: auto;
-            width: 70%;
             font-size: 19px;
             font-family: "Georgia", serif;
             text-align-last: center;
@@ -91,26 +90,7 @@
             position: relative;
             vertical-align: top;
         }
-        #result-table{
-            width: 100%;
-            background-color: #e7bf06;
-            text-align: center;
-            table-layout: fixed;
-            word-wrap: break-word;
-        }
-        #result-table td {
-            overflow: hidden;
-        }
-        .w13 {width: 13%}
-        .w24 {width: 24%}
-        .result-content{
-            position: absolute;
-            height: 100%;
-            padding-bottom: 0;
-            width: 100%;
-            overflow-y: scroll;
-            background-color: #ffd23c;
-        }
+
 
         div.buttons{
             text-align: center;
@@ -144,9 +124,13 @@
             font-size: 19px;
             color: red;
         }
-        #result-table-header {
-            background-color: #b0961f;
+        svg {
+            border: 2px solid #006100;
+            border-radius: 10px;
+            margin-left: auto;
+            margin-right: auto;
         }
+        .w50 {width: 50%}
     </style>
 </head>
 <body>
@@ -157,7 +141,12 @@
             <span class="right-aligned">Фам Мань Туан<br>P3212<br>Вариант: 12022 </span>
         </td>
     </tr>
+    <colgroup>
+        <col class="w50"/>
+        <col width="w50"/>
+    </colgroup>
     <tr class="body">
+
         <td id="graph">
             <div class="header">
                 <h2>Graph</h2>
@@ -195,45 +184,7 @@
             <div class="header">
                 <h2>Result</h2>
             </div>
-            <div class="result-content">
-                <table id="result-table">
-                    <colgroup>
-                        <col class="w13"/>
-                        <col class="w13"/>
-                        <col class="w13"/>
-                        <col class="w13"/>
-                        <col class="w24"/>
-                        <col class="w24"/>
-                    </colgroup>
-                    <tr id="result-table-header">
-                        <th>X</th>
-                        <th>Y</th>
-                        <th>R</th>
-                        <th>Result</th>
-                        <th>Time</th>
-                        <th>Executed time (ns)</th>
-                    </tr>
-<%--                    <c:forEach var="hit" items="${shotForBean.hitList}">--%>
-<%--                        <tr>--%>
-<%--                            <td>${hit.x}</td>--%>
-<%--                            <td>${hit.y}</td>--%>
-<%--                            <td>${hit.r}</td>--%>
-<%--                            <c:if test="${hit.result == 'Да'}">--%>
-<%--                                <td>--%>
-<%--                                    <div style="color:#279327">${(hit.result)}</div>--%>
-<%--                                </td>--%>
-<%--                            </c:if>--%>
-<%--                            <c:if test="${hit.result == 'Нет'}">--%>
-<%--                                <td>--%>
-<%--                                    <div style="color:#e11a1a">${(hit.result)}</div>--%>
-<%--                                </td>--%>
-<%--                            </c:if>--%>
-<%--                            <td>${hit.localTime}</td>--%>
-<%--                            <td>${hit.processingTime} sec</td>--%>
-<%--                        </tr>--%>
-<%--                    </c:forEach>--%>
-                </table>
-            </div>
+            <div id="tableofresults"></div>
         </td>
     </tr>
         <td id="values">
